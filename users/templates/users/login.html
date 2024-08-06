@@ -1,0 +1,30 @@
+{% extends 'home/base.html' %} {% block content %}
+
+<div class="container">
+  <h1 class="my-4">Login</h1>
+  <!-- FORM ERRORS -->
+  {% if form.errors %}
+  <div class="alert alert-warning my-3" role="alert">
+    <ul>
+      {% for field, errors in form.errors.items %} {% for error in errors %}
+      <li>{{ error }}</li>
+      {% endfor %} {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+  <form action="" method="POST">
+    {% load widget_tweaks %} {% csrf_token %}
+    <div class="mb-3">
+      <label class="form-label">Username</label>
+      {{ form.username |add_class:"form-control" }}
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Password</label>
+      {{ form.password |add_class:'form-control' }}
+    </div>
+    <button type="submit" class="btn btn-primary">Login</button>
+  </form>
+</div>
+
+{% endblock %}

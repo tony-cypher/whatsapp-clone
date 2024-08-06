@@ -1,0 +1,17 @@
+#ab {
+  text-decoration: none;
+  color: black;
+}
+
+#chat-messages {
+  height: 400px;
+  overflow-y: auto;
+}
+
+#scroll {
+  padding-bottom: 30px;
+}
+
+#message-input:focus {
+  box-shadow: none;
+}
