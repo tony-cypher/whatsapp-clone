@@ -23,8 +23,13 @@ chatSocket.onmessage = function (e) {
 
     $("#chat-messages").append(html);
     scrollToBottom();
-  } else {
-    alert("Message is empty");
+  }
+
+  if (data.user_count !== undefined) {
+    console.log("user_count", data.user_count);
+    document.getElementById(
+      "userCount"
+    ).innerHTML = `<i class="bi bi-dot text-success"></i>${data.user_count} online`;
   }
 };
 
