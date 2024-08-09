@@ -1,7 +1,9 @@
 {% extends 'home/base.html' %}
 
 <!-- group title -->
-{% block name %} {{ group.group_name }} {% endblock %}
+{% block name %} {{ chat.user1.username }} and {{ chat.user2.username}}
+<!-- endblock -->
+{% endblock %}
 
 <!-- block -->
 {% block content %}
@@ -16,7 +18,7 @@
     {% for message in messages reversed %}
 
     <!-- EACH MESSAGE -->
-    {% if message.author == request.user%}
+    {% if message.author == request.user %}
     <div>
       <div class="w-50 ms-auto">
         <div class="bg-success text-white rounded">
@@ -25,6 +27,7 @@
       </div>
     </div>
     {% else %}
+
     <div>
       <span>{{ message.author.profile.display_name }}</span>
       <div class="bg-info text-dark w-50 rounded">
@@ -46,16 +49,16 @@
         />
       </div>
       <div class="col-2">
-        <button id="send" type="submit" class="btn btn-success">
+        <button id="privateSend" type="submit" class="btn btn-success">
           <i class="bi bi-send-fill"></i>
         </button>
       </div>
     </div>
   </form>
-  {{ 'public'|json_script:'jroom' }}
-  <!-- groupName -->
-  {{ group.group_name|json_script:'json-roomname' }}
+  {{ 'private'|json_script:'jroom' }} {{ chat.user2.id|json_script:'user2_id' }}
 
+  <!-- userid -->
+  {{ chat.user1.id|json_script:'user1_id' }}
   <!-- username -->
   {{ request.user.username|json_script:'json-username' }}
 </div>

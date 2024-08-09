@@ -10,6 +10,10 @@ from .models import *
 # To track of the number of users in each room
 room_users_count = {}
 
+# generates unique room name for each pair of users.
+def get_private_room_name(user1_id, user2_id):
+    return f"private_{min(user1_id, user2_id)}_{max(user1_id, user2_id)}"
+
 class ChatroomConsumer(AsyncWebsocketConsumer):
 
     async def connect(self):
@@ -115,3 +119,74 @@ class ChatroomConsumer(AsyncWebsocketConsumer):
             room_users_count[room_group_name] -= 1
         if room_users_count[room_group_name] == 0:
             del room_users_count[room_group_name]
+
+
+class PrivateChatConsumer(AsyncWebsocketConsumer):
+    async def connect(self):
+        self.room_name = self.scope['url_route']['kwargs']['chatroom_name']
+        self.room_group_name = f'chat_{self.room_name}'
+
+        # Get or create the PrivateChat instance
+        self.chat = await self.get_or_create_chat(self.room_name)
+
+        # join room
+        await self.channel_layer.group_add(
+            self.room_group_name,
+            self.channel_name
+        )
+
+        await self.accept()
+    
+    async def disconnect(self, close_code):
+
+        await self.channel_layer.group_discard(
+            self.room_group_name,
+            self.channel_name
+        )
+    
+    async def receive(self, text_data):
+        data_json = json.loads(text_data)
+        message = data_json['message']
+        username = data_json['author']
+
+        # save message to the database.
+        await self.save_message(username, message)
+
+        await self.channel_layer.group_send(
+            self.room_group_name, {
+                'type': 'chat.message',
+                'message': message,
+                'username': username,
+                'created': 'now',
+            }
+        )
+    
+    async def chat_message(self, event):
+        message = event['message']
+        author = event['username']
+        created = event['created']
+
+
+        # send message to Websocket
+        await self.send(text_data=json.dumps({
+            'message': message,
+            'author': author,
+            'created': created
+        }))
+
+    @sync_to_async
+    def get_or_create_chat(self, room_name):
+        user1_id, user2_id = [int(id) for id in room_name.split('_')[1:]]
+        if user1_id != user2_id:
+            user1, user2 = User.objects.get(id=user1_id), User.objects.get(id=user2_id)
+            chat, created = PrivateChat.objects.get_or_create(user1=user1, user2=user2)
+            return chat
+    
+    @sync_to_async
+    def save_message(self, username, message):
+        user = User.objects.get(username=username)
+        return PrivateMessage.objects.create(
+            chat=self.chat,
+            author=user,
+            body=message
+        )

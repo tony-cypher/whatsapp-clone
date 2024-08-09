@@ -1,3 +1,11 @@
 {% extends 'home/base.html' %} {% block content %} {% for room in rooms %}
 <h4><a id="ab" href="{% url 'group_chat' room.group_name %}">{{ room }}</a></h4>
+{% endfor %} {% for chatroom in chatrooms %}
+<h4>
+  <a
+    id="ab"
+    href="{% url 'private_chat' user1=chatroom.user1.id user2=chatroom.user2.id %}"
+    >{{ chatroom }}</a
+  >
+</h4>
 {% endfor %} {% endblock %}
