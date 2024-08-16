@@ -15,3 +15,86 @@
 #message-input:focus {
   box-shadow: none;
 }
+/* main */
+
+#main {
+  margin-top: 23px;
+  padding: 20px 30px;
+  transition: all 0.3s;
+}
+
+@media (max-width: 1199px) {
+  #main {
+    width: 300px;
+    margin-left: auto;
+    padding: 20px;
+  }
+}
+
+@media (min-width: 1200px) {
+  #main {
+    margin-left: 400px;
+  }
+}
+
+/* SIDEBAR */
+.sidebar {
+  /* position: fixed; */
+  left: 0;
+  bottom: 0;
+  width: 400px;
+  z-index: 996;
+  transition: all 0.3s;
+  padding: 20px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #aab7cf transparent;
+  box-shadow: 0px 0px 20px rgba(1, 41, 112, 0.1);
+  background-color: #1d2622;
+}
+
+@media (max-width: 1199px) {
+  .sidebar {
+    width: 500px;
+  }
+}
+
+.sidebar-nav .nav-item {
+  margin-bottom: 5px;
+}
+
+.sidebar-nav .nav-link {
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+  font-weight: 600;
+  color: #4154f1;
+  transition: 0.3;
+  background: #25332c;
+  padding: 10px 15px;
+  border-radius: 4px;
+}
+
+.sidebar-nav .nav-link i {
+  font-size: 16px;
+  margin-right: 10px;
+  color: #4154f1;
+}
+
+.sidebar-nav .nav-link.collapsed {
+  color: #fff;
+  background: #1d2622;
+}
+
+.sidebar-nav .nav-link.collapsed i {
+  color: #899bbd;
+}
+
+.sidebar-nav .nav-link:hover {
+  color: #fff;
+  background: #25332c;
+}
+
+.sidebar-nav .nav-link:hover i {
+  color: #fff;
+}
