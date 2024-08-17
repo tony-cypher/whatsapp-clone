@@ -1,42 +1,44 @@
 {% extends 'home/base.html' %} {% block content %}
+<div class="col m-5">
+  <div class="container">
+    <h1 class="my-4">Register</h1>
+    <!-- FORM ERRORS -->
+    {% if form.errors %}
+    <div class="alert alert-warning my-3" role="alert">
+      <ul>
+        {% for field, errors in form.errors.items %} {% for error in errors %}
+        <li>{{ error }}</li>
+        {% endfor %} {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
 
-<div class="container">
-  <h1 class="my-4">Register</h1>
-  <!-- FORM ERRORS -->
-  {% if form.errors %}
-  <div class="alert alert-warning my-3" role="alert">
-    <ul>
-      {% for field, errors in form.errors.items %} {% for error in errors %}
-      <li>{{ error }}</li>
-      {% endfor %} {% endfor %}
-    </ul>
+    <form action="" method="POST">
+      {% csrf_token %}
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label">Username</label>
+          {{ form.username }}
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Email</label>
+          {{ form.email }}
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">First name</label>
+          {{ form.first_name }}
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Password</label>
+          {{ form.password1 }}
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Confirm Password</label>
+          {{ form.password2 }}
+        </div>
+      </div>
+      <button type="submit" class="btn btn-success mt-4">Register</button>
+    </form>
   </div>
-  {% endif %}
-
-  <form action="" method="POST">
-    {% csrf_token %}
-    <div class="mb-3">
-      <label class="form-label">Username</label>
-      {{ form.username }}
-    </div>
-    <div class="mb-3">
-      <label class="form-label">Email</label>
-      {{ form.email }}
-    </div>
-    <div class="mb-3">
-      <label class="form-label">First name</label>
-      {{ form.first_name }}
-    </div>
-    <div class="mb-3">
-      <label class="form-label">Password</label>
-      {{ form.password1 }}
-    </div>
-    <div class="mb-3">
-      <label class="form-label">Confirm Password</label>
-      {{ form.password2 }}
-    </div>
-    <button type="submit" class="btn btn-dark">Register</button>
-  </form>
 </div>
-
 {% endblock %}

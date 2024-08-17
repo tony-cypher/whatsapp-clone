@@ -55,17 +55,28 @@
               </a>
               {% endfor %}
             </li>
+            <li class="nav-item">
+              <form id="logout-form" action="{% url 'logout' %}" method="POST">
+                {% csrf_token %}
+                <a
+                  class="nav-link collapsed"
+                  href=""
+                  onclick="document.getElementById('logout-form').submit(); return false;"
+                  ><i class="bi bi-arrow-left-square"></i>Logout</a
+                >
+              </form>
+            </li>
             {% else %}
 
             <li class="nav-item">
-              <a class="nav-link collapsed" href="">
-                <i class="bi bi-card-list"></i>
+              <a class="nav-link collapsed" href="{% url 'register' %}">
+                <i class="bi bi-arrow-right-square"></i>
                 <span>Register</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link collapsed" href="">
-                <i class="bi bi-box-arrow-in-right"></i>
+              <a class="nav-link collapsed" href="{% url 'login' %}">
+                <i class="bi bi-arrow-right-square"></i>
                 <span>Login</span>
               </a>
             </li>
@@ -76,7 +87,7 @@
       </div>
 
       <!-- End Sidebar-->
-      <div class="col bg-dark">{% block content %} {% endblock %}</div>
+      {% block content %} {% endblock %}
     </div>
 
     <script src="{% static 'home/main.js' %}"></script>
