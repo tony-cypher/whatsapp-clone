@@ -27,9 +27,10 @@
 
     <!-- ======= Sidebar ======= -->
     <div class="row">
-      <div class="col">
+      <div class="col-md-auto bg-dark">
         <aside id="sidebar" class="sidebar">
           <ul class="sidebar-nav" id="sidebar-nav">
+            {% if user.is_authenticated %}
             <li class="nav-item">
               {% for room in rooms %}
               <a
@@ -54,6 +55,7 @@
               </a>
               {% endfor %}
             </li>
+            {% else %}
 
             <li class="nav-item">
               <a class="nav-link collapsed" href="">
@@ -61,21 +63,20 @@
                 <span>Register</span>
               </a>
             </li>
-            <!-- End Register Page Nav -->
-
             <li class="nav-item">
               <a class="nav-link collapsed" href="">
                 <i class="bi bi-box-arrow-in-right"></i>
                 <span>Login</span>
               </a>
             </li>
+            {% endif %}
             <!-- End Login Page Nav -->
           </ul>
         </aside>
       </div>
 
       <!-- End Sidebar-->
-      <div class="col">{% block content %} {% endblock %}</div>
+      <div class="col bg-dark">{% block content %} {% endblock %}</div>
     </div>
 
     <script src="{% static 'home/main.js' %}"></script>
