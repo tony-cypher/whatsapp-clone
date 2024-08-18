@@ -32,6 +32,9 @@ class PrivateChat(models.Model):
     
     def get_chat_name(self):
         return f'Private_{min(self.user1.id, self.user2.id)}_{max(self.user1.id, self.user2.id)}'
+    
+    def name(self):
+        return f'{self.user1} and {self.user2}'
 
 
 class PrivateMessage(models.Model):

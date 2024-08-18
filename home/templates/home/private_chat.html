@@ -55,12 +55,15 @@
         </div>
       </div>
     </form>
-    {{ chat.user2.id|json_script:'user2_id' }}
-
-    <!-- userid -->
-    {{ chat.user1.id|json_script:'user1_id' }}
-    <!-- username -->
-    {{ request.user.username|json_script:'json-username' }}
   </div>
 </div>
-{% endblock %}
+{{ chat.user2.id|json_script:'user2_id' }}
+
+<!-- userid -->
+{{ chat.user1.id|json_script:'user1_id' }}
+<!-- username -->
+{{ request.user.username|json_script:'json-username' }}
+
+<!-- To clear public chat errors  -->
+<!-- room -->
+{{ room|json_script:'json-room' }} {% endblock %}

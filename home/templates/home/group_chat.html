@@ -47,12 +47,16 @@
         </div>
       </div>
     </form>
-
-    <!-- groupName -->
-    {{ group.group_name|json_script:'json-roomname' }}
-
-    <!-- username -->
-    {{ request.user.username|json_script:'json-username' }}
   </div>
 </div>
+<div id="privateSend"></div>
+
+<!-- room -->
+{{ room|json_script:'json-room'}}
+<!-- groupName -->
+{{ group.group_name|json_script:'json-roomname' }}
+
+<!-- username -->
+{{ request.user.username|json_script:'json-username' }}
+<!-- end -->
 {% endblock %}
