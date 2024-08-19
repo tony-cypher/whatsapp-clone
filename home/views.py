@@ -7,8 +7,11 @@ from .forms import GroupMessageForm
 
 def groups(request):
     rooms = ChatGroup.objects.all()
-    chatrooms = PrivateChat.objects.filter(id=request.user.id)
-    return render(request, 'home/index.html', {'rooms': rooms, 'chatrooms':chatrooms})
+    private_rooms = []
+    for chat in PrivateChat.objects.all():
+        if request.user.username in chat.name():
+            private_rooms.append(chat)
+    return render(request, 'home/index.html', {'rooms': rooms, 'private_rooms': private_rooms})
 
 @login_required
 def group_chat(request, name):
