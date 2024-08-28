@@ -29,7 +29,7 @@
       {% else %}
 
       <div>
-        <span>{{ message.author.profile.display_name }}</span>
+        <span>{{ message.author }}</span>
         <div class="bg-info text-dark w-50 rounded">
           <p class="p-1">{{ message.body }}</p>
         </div>
@@ -40,7 +40,13 @@
       <div class="row p-4">
         {% csrf_token %}
         <div class="col-10">
-          <input type="text" class="form-control" placeholder="Message" , id="message-input" />
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Message"
+            ,
+            id="message-input"
+          />
         </div>
         <div class="col-2">
           <button id="privateSend" type="submit" class="btn btn-success">

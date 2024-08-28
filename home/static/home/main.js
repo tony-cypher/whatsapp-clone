@@ -103,15 +103,25 @@ function PrivateChat() {
     console.log("privateChatSocket on message");
     const data = JSON.parse(e.data);
     if (data.message) {
-      let html = `<div>
+      if (data.author == username) {
+        let html = `<div>
       <div class="w-50 ms-auto">
         <div class="bg-success text-white rounded">
           <p id="chat" class="p-1">${data.message}</p>
         </div>
       </div>
     </div>`;
+        $("#chat-messages").append(html);
+      } else {
+        let html = `<div>
+                      <span>${data.author}</span>
+                      <div class="bg-info text-dark w-50 rounded">
+                        <p class="p-1">${data.message}</p>
+                      </div>
+                    </div>`;
+        $("#chat-messages").append(html);
+      }
 
-      $("#chat-messages").append(html);
       scrollToBottom();
     }
   };
