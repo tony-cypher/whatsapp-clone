@@ -29,23 +29,29 @@ function PublicChat() {
   const chatSocket = new WebSocket(
     "ws://" + window.location.host + "/ws/chatroom/" + roomName + "/"
   );
-  console.log(roomName);
 
   chatSocket.onmessage = function (e) {
-    console.log("chatSocket on message");
+    console.log("Public chatSocket on message");
     const data = JSON.parse(e.data);
-    console.log(data);
-    console.log(data.message);
     if (data.message) {
-      let html = `<div>
-        <div class="w-50 ms-auto">
-          <div class="bg-success text-white rounded">
-            <p id="chat" class="p-1">${data.message}</p>
-          </div>
+      if (data.username == username) {
+        let html = `<div>
+      <div class="w-50 ms-auto">
+        <div class="bg-success text-white rounded">
+          <p id="chat" class="p-1">${data.message}</p>
         </div>
-      </div>`;
-
-      $("#chat-messages").append(html);
+      </div>
+    </div>`;
+        $("#chat-messages").append(html);
+      } else {
+        let html = `<div>
+                      <span>${data.username}</span>
+                      <div class="bg-info text-dark w-50 rounded">
+                        <p class="p-1">${data.message}</p>
+                      </div>
+                    </div>`;
+        $("#chat-messages").append(html);
+      }
       scrollToBottom();
     }
 
