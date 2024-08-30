@@ -44,7 +44,7 @@ class PrivateMessage(models.Model):
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'{self.author.username}: {self.body}'
+        return f'({self.chat}) => {self.author.username}: {self.body}'
 
     class Meta:
         ordering = ['-created']

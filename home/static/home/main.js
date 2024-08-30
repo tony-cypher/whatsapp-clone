@@ -36,7 +36,7 @@ function PublicChat() {
     if (data.message) {
       if (data.username == username) {
         let html = `<div>
-      <div class="w-50 ms-auto">
+      <div class="${data.message.length < 15 ? "w-25" : "w-50"} ms-auto">
         <div class="bg-success text-white rounded">
           <p id="chat" class="p-1">${data.message}</p>
         </div>
@@ -46,7 +46,9 @@ function PublicChat() {
       } else {
         let html = `<div>
                       <span>${data.username}</span>
-                      <div class="bg-info text-dark w-50 rounded">
+                      <div class="bg-info text-dark ${
+                        data.message.length < 15 ? "w-25" : "w-50"
+                      } rounded">
                         <p class="p-1">${data.message}</p>
                       </div>
                     </div>`;
@@ -111,7 +113,7 @@ function PrivateChat() {
     if (data.message) {
       if (data.author == username) {
         let html = `<div>
-      <div class="w-50 ms-auto">
+      <div class="${data.message.length < 15 ? "w-25" : "w-50"} ms-auto">
         <div class="bg-success text-white rounded">
           <p id="chat" class="p-1">${data.message}</p>
         </div>
@@ -121,7 +123,9 @@ function PrivateChat() {
       } else {
         let html = `<div>
                       <span>${data.author}</span>
-                      <div class="bg-info text-dark w-50 rounded">
+                      <div class="bg-info text-dark ${
+                        data.message.length < 15 ? "w-25" : "w-50"
+                      } rounded">
                         <p class="p-1">${data.message}</p>
                       </div>
                     </div>`;

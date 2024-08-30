@@ -20,50 +20,60 @@
       <!-- EACH MESSAGE -->
       {% if message.author == request.user %}
       <div>
-        <div class="w-50 ms-auto">
-          <div class="bg-success text-white rounded">
-            <p id="chat" class="p-1">{{ message.body }}</p>
+        {% if message.body|length < 15 %}
+        <div class="w-25 ms-auto">
+          {% else %}
+          <div class="w-50 ms-auto">
+            {% endif %}
+            <div class="bg-success text-white rounded">
+              <p id="chat" class="p-1">{{ message.body }}</p>
+            </div>
           </div>
         </div>
-      </div>
-      {% else %}
+        {% else %}
 
-      <div>
-        <span>{{ message.author }}</span>
-        <div class="bg-info text-dark w-50 rounded">
-          <p class="p-1">{{ message.body }}</p>
+        <div>
+          <span>{{ message.author }}</span>
+          {% if message.body|length < 15 %}
+          <div class="bg-info text-dark w-25 rounded">
+            {% else %}
+            <div class="bg-info text-dark w-50 rounded">
+              {% endif %}
+              <p class="p-1">{{ message.body }}</p>
+            </div>
+          </div>
+          {% endif %} {% endfor %}
         </div>
+        <form method="POST">
+          <div class="row p-4">
+            {% csrf_token %}
+            <div class="col-10">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Message"
+                ,
+                id="message-input"
+              />
+            </div>
+            <div class="col-2">
+              <button id="privateSend" type="submit" class="btn btn-success">
+                <i class="bi bi-send-fill"></i>
+              </button>
+            </div>
+          </div>
+        </form>
       </div>
-      {% endif %} {% endfor %}
     </div>
-    <form method="POST">
-      <div class="row p-4">
-        {% csrf_token %}
-        <div class="col-10">
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Message"
-            ,
-            id="message-input"
-          />
-        </div>
-        <div class="col-2">
-          <button id="privateSend" type="submit" class="btn btn-success">
-            <i class="bi bi-send-fill"></i>
-          </button>
-        </div>
-      </div>
-    </form>
+    {{ chat.user2.id|json_script:'user2_id' }}
+
+    <!-- userid -->
+    {{ chat.user1.id|json_script:'user1_id' }}
+    <!-- username -->
+    {{ request.user.username|json_script:'json-username' }}
+
+    <!-- To clear public chat errors  -->
+    <!-- room -->
+    {{ room|json_script:'json-room' }} {% endblock %}
   </div>
 </div>
-{{ chat.user2.id|json_script:'user2_id' }}
-
-<!-- userid -->
-{{ chat.user1.id|json_script:'user1_id' }}
-<!-- username -->
-{{ request.user.username|json_script:'json-username' }}
-
-<!-- To clear public chat errors  -->
-<!-- room -->
-{{ room|json_script:'json-room' }} {% endblock %}
