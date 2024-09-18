@@ -98,3 +98,8 @@
 .sidebar-nav .nav-link:hover i {
   color: #fff;
 }
+
+.form-control:focus {
+  border-color: #25332c;
+  box-shadow: none;
+}
