@@ -1,32 +1,25 @@
-{% extends 'home/base.html' %} {% block content %}
-<div class="col p-5 bg-dark text-white">
-  <div class="container">
-    <h1 class="my-4">Login</h1>
-    <!-- FORM ERRORS -->
-    {% if form.errors %}
-    <div class="alert alert-warning my-3" role="alert">
-      <ul>
-        {% for field, errors in form.errors.items %} {% for error in errors %}
-        <li>{{ error }}</li>
-        {% endfor %} {% endfor %}
-      </ul>
-    </div>
-    {% endif %}
-
-    <form action="" method="POST">
-      {% load widget_tweaks %} {% csrf_token %}
-      <div class="row">
-        <div class="col">
-          <label class="form-label">Username</label>
-          {{ form.username |add_class:"form-control" }}
-        </div>
-        <div class="col">
-          <label class="form-label">Password</label>
-          {{ form.password |add_class:'form-control' }}
-        </div>
-      </div>
-      <button type="submit" class="btn btn-success mt-4">Login</button>
-    </form>
-  </div>
+{% extends 'users/register.html' %} {% block content %}
+<div class="header">
+  <h1>WhatsApp Login</h1>
 </div>
+<div class="container">
+  <form action="" method="POST">
+    {% load widget_tweaks %} {% csrf_token %}
+    <div class="input-group">
+      <label for="phone">Username:</label>
+      {{ form.username | attr:"placeholder:Username" }}
+    </div>
+    <div class="input-group">
+      <label for="code">Password:</label>
+      {{ form.password | attr:"placeholder:Password" }}
+    </div>
+    <button class="btn-login" type="submit"">Login</button>
+    <a href=" {% url 'register' %}" class=" btn-download">Register</a>
+  </form>
+
+</div>
+<div class=" footer">
+  <p>© 2024 WhatsApp Inc.</p>
+</div>
+
 {% endblock %}

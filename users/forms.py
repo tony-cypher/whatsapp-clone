@@ -11,7 +11,7 @@ class RegistrationForm(UserCreationForm):
         model = User
         fields = ('username', 'email', 'first_name', 'password1', 'password2')
         widgets = {
-            'username': forms.TextInput(attrs={'class':'form-control'}),
-            'email': forms.EmailInput(attrs={'class':'form-control'}),
-            'first_name': forms.TextInput(attrs={'class':'form-control'}),
+            'username': forms.TextInput(attrs={'placeholder':'Username'}),
+            'email': forms.EmailInput(attrs={'placeholder':'Email'}),
+            'first_name': forms.TextInput(attrs={'placeholder':'First Name'}),
         }
