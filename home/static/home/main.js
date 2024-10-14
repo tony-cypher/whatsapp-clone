@@ -35,24 +35,24 @@ function PublicChat() {
     const data = JSON.parse(e.data);
     if (data.message) {
       if (data.username == username) {
-        let html = `<div>
-      <div class="${data.message.length < 15 ? "w-25" : "w-50"} ms-auto">
-        <div class="bg-success text-white rounded">
-          <p id="chat" class="p-1">${data.message}</p>
-        </div>
-      </div>
-    </div>`;
-        $("#chat-messages").append(html);
+        let html = `
+        <li class="common-message is-you">
+        <p class="common-message-content">
+          ${data.message}
+        </p>
+        <span class="status is-seen">✔️✔️</span>
+        <time datetime>14:11</time>
+      </li>`;
+        $("#chat-messages .messanger-list").append(html);
       } else {
-        let html = `<div>
-                      <span>${data.username}</span>
-                      <div class="bg-info text-dark ${
-                        data.message.length < 15 ? "w-25" : "w-50"
-                      } rounded">
-                        <p class="p-1">${data.message}</p>
-                      </div>
-                    </div>`;
-        $("#chat-messages").append(html);
+        let html = `
+        <li class="common-message is-other">
+        <p class="common-message-content">
+          ${message.body}
+        </p>
+        <time datetime>14:33</time>
+      </li>`;
+        $("#chat-messages .messanger-list").append(html);
       }
       scrollToBottom();
     }
@@ -61,7 +61,7 @@ function PublicChat() {
       console.log("user_count", data.user_count);
       document.getElementById(
         "userCount"
-      ).innerHTML = `<i class="bi bi-dot text-success"></i>${data.user_count} online`;
+      ).innerHTML = `${data.user_count} online`;
     }
   };
 
@@ -95,6 +95,7 @@ function PublicChat() {
 function PrivateChat() {
   const user1_id = JSON.parse(document.getElementById("user1_id").textContent);
   const user2_id = JSON.parse(document.getElementById("user2_id").textContent);
+  const chat_list = document.querySelector("#chat-messages .messanger-list");
   const username = JSON.parse(
     document.getElementById("json-username").textContent
   );
@@ -112,24 +113,24 @@ function PrivateChat() {
     const data = JSON.parse(e.data);
     if (data.message) {
       if (data.author == username) {
-        let html = `<div>
-      <div class="${data.message.length < 15 ? "w-25" : "w-50"} ms-auto">
-        <div class="bg-success text-white rounded">
-          <p id="chat" class="p-1">${data.message}</p>
-        </div>
-      </div>
-    </div>`;
-        $("#chat-messages").append(html);
+        let html = `
+        <li class="common-message is-you">
+        <p class="common-message-content">
+          ${data.message}
+        </p>
+        <span class="status is-seen">✔️✔️</span>
+        <time datetime>14:11</time>
+      </li>`;
+        $("#chat-messages .messanger-list").append(html);
       } else {
-        let html = `<div>
-                      <span>${data.author}</span>
-                      <div class="bg-info text-dark ${
-                        data.message.length < 15 ? "w-25" : "w-50"
-                      } rounded">
-                        <p class="p-1">${data.message}</p>
-                      </div>
-                    </div>`;
-        $("#chat-messages").append(html);
+        let html = `
+        <li class="common-message is-other">
+        <p class="common-message-content">
+          ${message.body}
+        </p>
+        <time datetime>14:33</time>
+      </li>`;
+        $("#chat-messages .messanger-list").append(html);
       }
 
       scrollToBottom();

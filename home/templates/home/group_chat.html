@@ -1,72 +1,109 @@
-{% extends 'home/base.html' %} {% block content %}
-<div class="col bg-dark">
-  <div id="scroll" class="container-sm bg-dark text-white my-5 w-75">
-    <div class="row text-left p-3">
-      <div class="col">{{ request.user }} home</div>
-      <div class="col">
-        <p id="userCount"></p>
-      </div>
+{% extends 'home/base.html' %}{% load static %}
+{% block content %}
+<main class="main-content">
+  <header class="common-header">
+    <div class="common-header-start">
+      <button class="common-button is-only-mobile u-margin-end js-back"><span class="icon icon-back">⬅</span></button>
+      <button class="u-flex js-side-info-button">
+        <img class="profile-image" src="{% static 'images/profile_pic.jpeg' %}" alt="CSS Masters Israel">
+        <div class="common-header-content">
+          <h2 class="common-header-title">{{ group }}</h2>
+        </div>
+        <p id="userCount" class="common-header-content">3 online</p>
+      </button>
     </div>
-    <div id="chat-messages" class="row">
+    <nav class="common-nav">
+      <ul class="common-nav-list">
+        <li class="common-nav-item">
+          <button class="common-button">
+            <span class="icon">🔎</span>
+          </button>
+        </li>
+        <li class="common-nav-item">
+          <button class="common-button">
+            <span class="icon icon-attach">📎</span>
+          </button>
+        </li>
+        <!-- <li class="common-nav-item">
+                  <button class="common-button u-animation-click js-side-info-button">
+                      <span class="icon icon-menu" aria-label="menu"></span>
+                  </button>
+              </li> -->
+      </ul>
+    </nav>
+  </header>
+  <div id="chat-messages" class="messanger">
+    <ol class="messanger-list">
       {% for message in messages reversed %}
-
-      <!-- EACH MESSAGE -->
       {% if message.author == request.user%}
-      <div>
-        {% if message.body|length < 15 %}
-        <div class="w-25 ms-auto">
-          {% else %}
-          <div class="w-50 ms-auto">
-            {% endif %}
-            <div class="bg-success text-white rounded">
-              <p id="chat" class="p-1">{{ message.body }}</p>
-            </div>
-          </div>
-        </div>
-        {% else %}
-        <div>
-          <span>{{ message.author }}</span>
-          {% if message.body|length < 15 %}
-          <div class="bg-info text-dark w-25 rounded">
-            {% else %}
-            <div class="bg-info text-dark w-50 rounded">
-              {% endif %}
-              <p class="p-1">{{ message.body }}</p>
-            </div>
-          </div>
-          {% endif %} {% endfor %}
-        </div>
-        <form method="POST">
-          <div class="row p-4">
-            {% csrf_token %}
-            <div class="col-10">
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Message"
-                ,
-                id="message-input"
-              />
-            </div>
-            <div class="col-2">
-              <button id="send" type="submit" class="btn btn-success">
-                <i class="bi bi-send-fill"></i>
-              </button>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
-    <div id="privateSend"></div>
-
-    <!-- room -->
-    {{ room|json_script:'json-room'}}
-    <!-- groupName -->
-    {{ group.group_name|json_script:'json-roomname' }}
-
-    <!-- username -->
-    {{ request.user.username|json_script:'json-username' }}
-    <!-- end -->
-    {% endblock %}
+      <li class="common-message is-you">
+        <p class="common-message-content">
+          {{ message.body }}
+        </p>
+        <span class="status is-seen">✔️✔️</span>
+        <time datetime>14:11</time>
+      </li>
+      {% else %}
+      <li class="common-message is-other">
+        <p class="common-message-content">
+          {{ message.body }}
+        </p>
+        <time datetime>14:33</time>
+      </li>
+      {% endif %}
+      {% endfor %}
+    </ol>
   </div>
-</div>
+  <form method="post">
+    <div class="message-box">
+      <button class="common-button"><span class="icon">😃</span></button>
+      <input type="text" class="text-input" placeholder="Type a message" , id="message-input" />
+      <button id="send" type="submit" class="common-button"><span class="icon">➤</span></button>
+    </div>
+  </form>
+</main>
+<aside class="main-info u-hide">
+  <header class="common-header">
+    <button class="common-button js-close-main-info"><span class="icon">❌</span></button>
+    <div class="common-header-content">
+      <h3 class="common-header-title">Info</h3>
+    </div>
+  </header>
+  <div class="main-info-content">
+    <section class="common-box">
+      <img class="main-info-image"
+        src="https://images.pexels.com/photos/8998216/pexels-photo-8998216.jpeg?auto=compress&cs=tinysrgb&w=600"
+        alt="CSS Masters Israel">
+      <h4 class="big-title">CSS Masters Israel</h4>
+      <p class="info-text">Created 6/11/2013 at 22:45</p>
+    </section>
+    <section class="common-box">
+      <h5 class="section-title">Description</h5>
+      <p>Out main channel of the comunity is on Fecbook: <a
+          href="https://www.facebook.com/groups/css.masters.israel/">http://bit.ly/2Up8On5</a></p>
+    </section>
+    <section class="common-box">
+      <h5 class="section-title">Other content</h5>
+      <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Architecto odit voluptatem magnam sequi
+        dolorem soluta assumenda ipsum iusto culpa velit repudiandae vitae minus minima corporis labore
+        sit, molestias, a ut!</p>
+    </section>
+  </div>
+</aside>
+
+
+
+<!-- OLD -->
+
+
+<div id="privateSend"></div>
+
+<!-- room -->
+{{ room|json_script:'json-room'}}
+<!-- groupName -->
+{{ group.group_name|json_script:'json-roomname' }}
+
+<!-- username -->
+{{ request.user.username|json_script:'json-username' }}
+<!-- end -->
+{% endblock %}

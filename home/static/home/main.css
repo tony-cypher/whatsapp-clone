@@ -625,12 +625,12 @@ html {
   when textbox empty show microhpone
   when textbox with texy show submit button
 } */
-#message-box:empty ~ #submit-button {
+/* #message-box:empty ~ #submit-button {
   display: none;
 }
 #message-box:not(:empty) ~ #voice-button {
   display: none;
-}
+} */
 
 /* MINE */
 .chats-list {
