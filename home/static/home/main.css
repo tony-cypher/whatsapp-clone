@@ -427,7 +427,7 @@ html {
   width: -moz-fit-content;
   width: fit-content;
   max-width: 500px;
-  padding: 0 8px;
+  padding: 8px;
   border-radius: 8px;
   box-shadow: 0 1px 0.5px rgba(0, 0, 0, 0.13);
   margin-bottom: 10px;
